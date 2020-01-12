@@ -43,4 +43,11 @@ Type the letters of the word you already guessed (if any) while separating lette
 
 7-Repeat the process above until we reached the threshold of word possibility (here defined to 20) after which the program end and tells us the probable answers as well as the number of iterations.
 
+#############
+# License   #
+#############
+
+GNU GENERAL PUBLIC LICENSE v3.0
+
+
 ########################################################################################

@@ -6,6 +6,41 @@ Created on Wed Jan  1 22:40:17 2020
 @author: mlavoie
 """
 
+# Examples of words:
+PrevExample = ['struggle', 'film', 'fight', 'continued', 'carried', 'national', 'shop', 'love', 'home', 'california',
+'slightly', 'adventure', 'aboard', 'break', 'desert', 'arrange', 'ought', 'principal',
+'judge', 'ground', 'favorite', 'rabbit', 'sets', 'die', 'possible', 'pitch', 'war', 'show', 'noted',
+'cow', 'six', 'food', 'difficulty', 'quarter', 'egg', 'johnny', 'exercise', 'newspaper', 'split',
+'coast', 'german', 'organized', 'japanese', 'sets', 'troops', 'remove', 'there', 'story', 'influence',
+'ordinary', 'scientist', 'noon', 'after', 'sick', 'form', 'degree', 'ask', 'sell', 'trail', 'applied',
+'face', 'shinning', 'henry', 'johnny', 'handsome', 'everything', 'saturday', 'compass', 'alaska',
+'party', 'leaving', 'die', 'twice', 'unknown', 'cow', 'crack', 'make', 'david', 'example', 'popular', 'march',
+'fun', 'see', 'settlers', 'glad', 'locate', 'few', 'anyway', 'proud', 'however', 'similar', 'lost',
+'plastic', 'found', 'people', 'roll', 'column', 'rough', 'jones', 'income', 'printed', 'freedom',
+'perhaps', 'health', 'understanding', 'divide', 'disappear', 'highway', 'settle', 'tie', 
+'lie', 'smith', 'broad', 'poet', 'behind', 'many', 'india', 'dance', 'common', 'dig', 'states',
+'success', 'dollar', 'poet', 'said', 'strike', 'will', 'snake', 'girl', 'told', 'college', 'screen',
+'sink', 'eventually', 'leaving', 'experience', 'sing', 'journey', 'aloud', 'brush', 'separate',
+'thank', 'proper', 'and', 'wonder', 'chemical', 'simple', 'hundred', 'rough', 'coming',
+'rope', 'money', 'likely', 'salmon', 'broad', 'baby', 'difficult', 'sport', 'political',  
+'problem', 'lunch', 'fighting', 'having', 'whether', 'again', 'russian', 'giving', 'somehow',
+'small', 'enemy', 'paul', 'receive', 'occasionally', 'telephone', 'obtain', 'should', 'beautiful', 'sad',
+'because', 'story', 'biggest', 'roman', 'victory', 'construction', 'has', 'species', 'july', 'greatest',
+'ride', 'feature', 'being', 'throughout', 'route', 'bread', 'tom', 'hunt', 'they', 'scientist', 'flight',
+'high', 'string', 'tree', 'opposite', 'surface', 'natural', 'wind', 'chair', 'nice', 'first', 'husband',
+'right', 'shadow', 'france', 'vegetable', 'parent', 'atomic', 'born', 'grandmother', 'essential', 'planet',
+'card', 'equally', 'happy', 'house', 'arrangement', 'chance', 'blew', 'sum', 'spin', 'mainly', 'ship',
+'division', 'price', 'seldom', 'fed', 'everybody', 'autumn', 'happened', 'charles', 'island', 'brick',
+'children', 'research', 'life', 'require', 'trade', 'fierce', 'left', 'suit', 'quiet', 'struck',
+'calm', 'straw', 'fish', 'gray', 'recently', 'coat', 'arrive', 'shoe', 'title', 'primitive', 'drove',
+'hair', 'dangerous', 'fifty', 'york', 'enjoy', 'living', 'speak', 'leaf', 'friendly', 'build', 'lower',
+'line', 'black', 'wonderful', 'market', 'lee', 'own', 'hour', 'advice']
+
+mostCommonThreeLett = ['the', 'and', 'for', 'are', 'but', 'not', 'you', 'all', 'any', 'can', 'had', 'her', 'was', 'one', 'our', 'out', 'day', 'get', 'has', 'him', 'his', 'how', 'man', 'new', 'now', 'old', 'see', 'two', 'way', 'who', 'boy', 'did', 'its', 'let', 'put', 'say', 'she', 'too', 'use']
+mostCommonFourLett = ['that', 'will', 'have', 'this', 'will', 'your', 'from', 'they', 'know', 'want', 'been',
+                      'good', 'much', 'some', 'time']
+PrevAll = mostCommonThreeLett + mostCommonFourLett + PrevExample
+        
 ####################################################################################################
 ############ Predicting a word of a given length when we need a hand to win HANGMAN ################
 ##                                                                                                ##
@@ -65,11 +100,18 @@ print("Number of single letter removed =", len(word_list) - nb_duplicates - len(
 word_list = copy.copy(word_list_uniq)
 print("Total number of words in the dictionary:", len(word_list), "words")
 
+# Add new words in the dictionary
+MissingWord = ['sets', 'troops', 'settlers', 'proud', 'columbus', 'states', 'having', 'has',
+               'greatest', 'france', 'blew', 'happened']
+for i in MissingWord:
+    word_list.append(i)
+
 # Produce a list of word length and find the maximum word length for later
 list_length = []
 for i in word_list:    
     list_length.append(len(i))
 print("The longest word in the dictionary has", max(list_length), "words \n")
+
 
 # Greetings
 print("###########################################################")
@@ -97,14 +139,16 @@ while True:
       if len(length_word) > 2: # Select only the length between 1 and 99
           print("Error: Only one valid word length is needed")
           continue
+      #if int(length_word) == 0:
+      #    print('Error: the length should be larger than 0')
+      #    continue
       else:
           length_word = int(length_word)
           if length_word > max(list_length): # Select only the length up to the maximum word length
               print('Word length too long! No such word of this length in the dictionary')
               continue
           else:
-              break
-                
+              break              
                 
 ## Remove from the word_list all words that did not match this length
 word_list2 = []
@@ -142,38 +186,69 @@ if wrong_letter != '0': # set object does not support indexing...
         f.pop(values)
 ######################################################################################       
 
-'''
-# Empirical guess taking into account consonants and vowels is not yet implemented
-# Extract consonants and vowels from the dictonary for the next steps
+
+#################################################################################
+# Creating vowels dictionary for further empirical guess of small words (see below)
 vowels = {key: f[key] for key in f.keys() 
                                & {'a', 'e', 'i', 'o', 'u'}}
 
-import copy
-conson = copy.deepcopy(f)  # make a DEEP (indpendant) copy of the 'f' dictionary
-for values in vowels:
-    conson.pop(values)
-'''
+##################################################################################
 
 prev_guessed = []
+rand_word_list = []
 nb_iter = 0
 
 while len(word_list2) > 20:
     letter_guess = 0
     
-    '''
-    if nb_iter in range(1,3):
-        vowels = {key: f[key] for key in f.keys() 
-                               & {'a', 'e', 'i', 'o', 'u'}}
-        letter_guess = max(vowels.items(), key=operator.itemgetter(1))[0]
-        # After that, look in consonants
-    if nb_iter > 3 and nb_iter < 7:
-        letter_guess = max(conson.items(), key=operator.itemgetter(1))[0] ()
-       # After that look in any letters
-    if nb_iter > 6:
-    '''
-    
     # Find out the most frequent letter that we have not already guessed
     letter_guess = max(f.items(), key=operator.itemgetter(1))[0]
+    
+    # Force to find out word pattern 'ing'
+    if len(rand_word_list) > 3 and 'g' not in prev_guessed and 'i' in rand_word_list[-3] and 'n' in rand_word_list[-2] :
+        letter_guess = 'g'      # We guess the syllable 'ing'
+    if len(rand_word_list) > 3 and 'i' not in prev_guessed and 'n' in rand_word_list[-2] and 'g' in rand_word_list[-1] :
+        letter_guess = 'i'      # We guess the syllable 'ing'
+    if len(rand_word_list) > 3 and 'n' not in prev_guessed and 'i' in rand_word_list[-3] and 'g' in rand_word_list[-1] :
+        letter_guess = 'n'      # We guess the syllable 'ing' 
+    
+    # Frequent two-party syllable (th, an, en, ir, he) and three-party (the, and, ing)
+    if len(rand_word_list) > 2 and 'h' not in prev_guessed and 't' in rand_word_list :
+        letter_guess = 'h'      # We guess the syllable 'th'
+    if len(rand_word_list) > 3 and 'n' not in prev_guessed and 'a' in rand_word_list :
+        letter_guess = 'n'      # We guess the syllable 'an'
+    if len(rand_word_list) > 3 and 'n' not in prev_guessed and 'e' in rand_word_list :
+        letter_guess = 'n'      # We guess the syllable 'en'
+    if len(rand_word_list) > 3 and 'r' not in prev_guessed and 'i' in rand_word_list :
+        letter_guess = 'r'      # We guess the syllable 'ir'    
+    if len(rand_word_list) > 2 and 'h' not in prev_guessed and 't' in rand_word_list and 'e' in rand_word_list :
+        letter_guess = 'h'      # We guess the syllable 'the'
+    if len(rand_word_list) > 2 and 't' not in prev_guessed and 'h' in rand_word_list and 'e' in rand_word_list :
+        letter_guess = 't'      # We guess the syllable 'the'
+    if len(rand_word_list) > 2 and 'e' not in prev_guessed and 'h' in rand_word_list and 't' in rand_word_list :
+        letter_guess = 'e'      # We guess the syllable 'the'
+    if len(rand_word_list) > 2 and 'a' not in prev_guessed and 'n' in rand_word_list and 'd' in rand_word_list :
+        letter_guess = 'a'      # We guess the syllable 'and'
+    if len(rand_word_list) > 2 and 'n' not in prev_guessed and 'a' in rand_word_list and 'd' in rand_word_list :
+        letter_guess = 'n'      # We guess the syllable 'and'
+    if len(rand_word_list) > 2 and 'd' not in prev_guessed and 'a' in rand_word_list and 'n' in rand_word_list :
+        letter_guess = 'n'      # We guess the syllable 'and'    
+    
+    # Select consonants at the third try when a vowel has been selected for small words (number of letter < 5).
+    # Here I should select consonants among the dictionary of frequency created at the end!!!!!!!
+    # Change that !!!!!!!!!!!!
+    if nb_iter > 2 and nb_iter < 5 and 'a' in rand_word_list or 'e' in rand_word_list or 'i' in rand_word_list or 'o' in rand_word_list and length_word < 5:
+        # Make a dictionary with only consonants at each iteration
+        import copy
+        conson = copy.deepcopy(f)  # make a DEEP (indpendant) copy of the 'f' dictionary
+        for values in vowels:
+            if values in conson:   # if the vowel has already been removed from f or conson, we cannot try to remove it. Otherwise, we will get an error
+                conson.pop(values) # make a dictionary without vowels (i.e., of consonant)
+        while True:
+            letter_guess = max(conson.items(), key=operator.itemgetter(1))[0]  # Choose a consonant
+            if letter_guess not in prev_guessed:   # Make sure the consonant has not been selected before
+                letter_guess = letter_guess
+                break    # if we find a new consonant that has not been selected before, we can exit the 'while' loop   
     
     # Say to user the best guess letter !!!
     print("Your best guess letter is:", letter_guess)
@@ -187,8 +262,8 @@ while len(word_list2) > 20:
     
     # Ask the user if he guessed correctly this letter.
     while True:
-        answer = input("Did you guess correctly?, press y (for yes) or n (for no)  ")
-        if answer == 'y' or answer == 'n':
+        answer = input("Did you guess correctly?, press y (for yes, or 'yy' if the letter is repeated twice) or n (for no)  ")
+        if answer == 'y' or answer == 'yy' or answer == 'yyy' or answer == 'n':
             break
         if answer == 'q':
             sys.exit("Bye Bye!")
@@ -208,18 +283,56 @@ while len(word_list2) > 20:
                 
     print("The total number of possible word is:", len(word_list2))
    
-        
+    # If we guessed correctly with a given number of repeated letter, 
+    # we must remove all other words that do not have the same number of repetitions
+    # Default, remove all repetitions of letters ('oo', 'ooo')
+    # traverse all strings one by one 
+    # dict is an empty dictionary 
+    from collections import Counter 
+    
+    if answer == 'y':
+        word_list_copy = copy.deepcopy(word_list2)
+        for i in word_list_copy:
+            wordDict = Counter(i) # Create a dictionary of letter frequency for each word of the word list
+            if wordDict[letter_guess] > 1: # if there is more than one letter, remove it
+                word_list2.remove(i) 
+    
+    if answer == 'yy':
+        word_list_copy = copy.deepcopy(word_list2)
+        for i in word_list_copy:
+            wordDict = Counter(i) # Create a dictionary of letter frequency for each word of the word list
+            if wordDict[letter_guess] != 2: # if there is more than two letters or only one letter, remove the word
+                word_list2.remove(i) 
+    
+    if answer == 'yyy':
+        word_list_copy = copy.deepcopy(word_list2)
+        for i in word_list_copy:
+            wordDict = Counter(i) # Create a dictionary of letter frequency for each word of the word list
+            if wordDict[letter_guess] != 3: # if there is more than two letters or only one letter, remove the word
+                word_list2.remove(i) 
+    
+    
     # If we guessed incorrectly, remove all words that contain the incorrectly guessed letter
     # i.e., if letter_guess is not in the word we are looking for
     if answer == "n":  # if letter_guess not in rand_word:
         print("The letter we guessed, i.e., ", letter_guess, "was not in the word")
         # Check for the presence of letter_guess in each word
         for num, i in enumerate(word_list_copy):
-            if word_list_copy[num].find(letter_guess) != -1: # If the letter is not in the list
+            if word_list_copy[num].find(letter_guess) != -1: # If the letter is in the list
                 word_list2.remove(i)
             
     print("The total number of possible word is:", len(word_list2))
     
+ 
+    # A function testing if all strings in a list can be really strings (not numbers)
+    # INPUT : l1 is a list
+    # OUTPUT : Return 'True' if all elements of the list are strings or 'False' if any list elements is/are not string
+    def RepresentsInt2(l1):
+        try: 
+            all(isinstance(x, str) for x in l1) == True
+            return True
+        except ValueError:
+            return False
     
     # Ask and print the word, i.e., the guessed letter and the unknown letters:
     # This loop ensure we enter a valid word length and can print the word list
@@ -233,10 +346,13 @@ while len(word_list2) > 20:
         #    print(word_list2)
         if len(word_list2) < 200:
             print(word_list2)
+        if RepresentsInt2(rand_word_list) == True and any(j == '0' for j in rand_word_list) == False:
+            print('Error: Only letters must be typed except the number 0')
+            continue
         if len(rand_word_list) == length_word:
-            break
-        
-        
+            break    
+    
+    
     # Create the regex pattern
     print("Here is the list for regex definition with zeros when letters are not guessed and with letters:", rand_word_list)
     rand_word_list.count(0) # Count the number of letter remaining to find
@@ -275,7 +391,7 @@ while len(word_list2) > 20:
             continue # Nothing to do, we did not guess any letters
         
         string = ''
-        string2 = ''
+        #string2 = ''
         for num, j in enumerate(nb_empty_list):
             if type(nb_empty_list[num]) == int:
                 string += '\\w{%r}'
@@ -296,6 +412,11 @@ while len(word_list2) > 20:
             word_list2.remove(i) # remove the word from the dictionary  
     
     print("Total number of possible words:", len(word_list2))
+    print("Common word possibilities : ")
+    for i in PrevAll:
+        if i in word_list2:
+            print(i, end=", ")
+    print("\n")
     
     # rand_word_list
     # find the blank spaces indices in the rand_word_list (position to be filled in the word)
@@ -318,7 +439,7 @@ while len(word_list2) > 20:
 print("Number of iterations needed :", nb_iter)    
 
 if len(word_list2) < 200:
-    print("The answer is: ", word_list2)
+    print("The answer is: ", word_list2, "\n")
 
 ###########################################################################
 
